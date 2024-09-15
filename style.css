@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    list-style: none;
+    color: black;
+}
+.nav{
+    width: 1440px;
+    height: 72px;
+    gap: 0px;
+    opacity: 0px;
+}
+.main{
+    width:  1,125px;
+    height:  613px;
+    top: 152px;
+    left: 157px;
+    gap: 0px;
+    opacity: 0px;
+
+}
