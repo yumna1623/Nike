@@ -1,7 +1,9 @@
 @media screen and (max-width:386px){
 
     .nike{
-        margin-left:3px;
+        margin-left:2px;
+        margin-bottom:2px;
+        
     }
    .main{
     display: block;
@@ -13,17 +15,28 @@
    .left h1{
         font-size: 30px;
         display: block;
-        text-align: left;
-        /* white-space: pre-line;  */
+        text-align: center;
+        line-height: 38px;
+        width: 50%;
+        font-size: 40px;
+        margin-left: 10px;
+        word-wrap: break-word;
    }
    .left p{
-    margin-top: 0;
-    margin-top: -170px;
+            margin-top: -100px;
+            word-wrap: break-word;
+            width: 50%; 
+
+    
    }
    .right img{
-    margin-top: -480px;
+    margin-top: -360px;
     margin-left: 10px;
     width: 75%;
-
    }
+   .btn1{
+    /* margin-right: 100px; */
+    /* width: 25%; */
+   }
+   
 }
