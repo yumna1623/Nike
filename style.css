@@ -125,3 +125,225 @@ max-width: 100%;
     opacity: 0px;
     margin-left:-70px;
 }
+
+--------post.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+   
+    <link rel="stylesheet" href="../login.css">
+</head>
+<body>
+    
+   <h1>post page</h1>
+
+   <textarea name="" placeholder="Type Something..." id="content"></textarea><br><br><br>
+   <input type="file" id="imageFile"><br><br>
+   <button id="post-btn">+ Add Post</button>
+
+   <script src="../src/auth.js" type="module"></script>
+   <script type="module" src="../src/post.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.0"></script>
+</body>
+</html>
+--------------------------------------------------------------------------------------config.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+import {
+  getDatabase,
+  set,
+  ref,
+} from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAUby9tQlTb1oRWWNUJJFx3XZ4MWFAFC40",
+  authDomain: "blog-app-3c075.firebaseapp.com",
+  projectId: "blog-app-3c075",
+  storageBucket: "blog-app-3c075.firebasestorage.app",
+  messagingSenderId: "180806435607",
+  appId: "1:180806435607:web:499a10a41c6ef43d8f6d52"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+
+export {
+  auth,
+  createUserWithEmailAndPassword,
+  database,
+  ref,
+  set,
+  onAuthStateChanged,
+};
+
+--------------------------------------------------------------------------------------auth
+    import {
+  auth,
+  db,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "./Config/Auth";
+
+const handleSignup = () => {
+    const email = document.getElementById("email-signup").value;
+    const password = document.getElementById("password-signup").value;
+  
+    if (email && password) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredentials) => {
+  
+          const usersRef = ref(database , `users/${userCredentials.user.uid}/`)
+          
+          set(usersRef , {
+            email: email,
+            createdAt: new Date().getTime()
+          })
+          .then((user) => {
+            console.log(user);
+            alert("User Created Successfully");
+            window.location.href = "../dist/post.html";
+          })
+          .catch((error)=>{
+            alert(error.message);
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  const handleLogin = () => {
+    const email = document.getElementById("email-login").value;
+    const password = document.getElementById("password-login").value;
+  
+    if (email && password) {
+        signInWithEmailAndPassword(auth,email,password)
+        .then((userCredentials) => {
+            console.log(userCredentials);
+            alert("User Logged In Successfully");
+            window.location.href = "./quiz.html";
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  };
+  onAuthStateChanged(auth,(user)=>{
+    const LogOutBtn = document.getElementById("logout-btn")
+    if(user){
+        LogOutBtn.style.display = "block";
+        LogOutBtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            signOut(auth);
+            window.location.href = "./signUp.html"
+        })
+    }
+    else{
+        console.log("user not logged in");
+        LogOutBtn.style.display = "none";
+    }
+  })
+  const SignUpbtn = document.getElementById("Signup-btn")
+  if(SignUpbtn){
+    SignUpbtn.addEventListener("click",(e)=>{
+        e.preventDefault();
+        handleSignup();
+    })
+  }
+
+  const Loginbtn = document.getElementById("Login-btn")
+  if(Loginbtn){
+    Loginbtn.addEventListener("click",(e)=>{
+        e.preventDefault;
+        handleLogin();
+    })
+  }
+--------------------------------------------------------------------------------------post
+        import { Client, Account } from 'appwrite';
+
+export const client = new Client();
+
+client
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject('67a6f65b002f61ba630e'); // Replace with your project ID
+    export const account = new Account(client);
+
+const addPost = (imagesrc)=>{
+    const content = document.getElementById("content").value;
+    const imageFile = document.getElementById("imageFile").files[0];
+
+    const promise = storage.createFile(
+        '67a6fd3d0003b93a6a65',
+        '[COLLECTION_ID]',
+        ID.unique(),
+        imageFile
+    );
+
+    promise.then(
+        function (response) {
+            console.log(response);
+        },
+        function (error) {
+            console.error(error);
+        }
+    )
+}
+const uploadImage = ()=>{
+
+}
+const button = document.createElement("post-btn");
+button.addEventListener("click", addPost);
+        --------------------------------------------------------------------------------------index
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="../src" type="module"></script>
+</body>
+</html>
+                --------------------------------------------------------------------------------------index
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
